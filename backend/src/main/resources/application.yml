@@ -1,0 +1,54 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+  application:
+    name: advanced-programming-design-term-project-api
+  data:
+    redis:
+      url: ${SEMANTIC_CACHE_REDIS_URL:redis://localhost:6379/0}
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/youth_mental_health?serverTimezone=Asia/Seoul&characterEncoding=UTF-8}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+app:
+  ml-api-url: ${ML_API_URL:http://localhost:8000}
+  cors-origin: ${CORS_ORIGIN:http://localhost:5173}
+  llm:
+    base-url: ${LLM_BASE_URL:}
+    api-key: ${LLM_API_KEY:${OPENAI_API_KEY:}}
+    model: ${LLM_MODEL:openrouter/free}
+    prompt-version: ${LLM_PROMPT_VERSION:v1}
+    connect-timeout-ms: ${LLM_CONNECT_TIMEOUT_MS:3000}
+    read-timeout-ms: ${LLM_READ_TIMEOUT_MS:4000}
+    max-tokens:
+      supportive-reply: ${LLM_MAX_TOKENS_SUPPORTIVE_REPLY:240}
+      likert-scoring: ${LLM_MAX_TOKENS_LIKERT_SCORING:140}
+      survey-turn: ${LLM_MAX_TOKENS_SURVEY_TURN:360}
+      result-summary: ${LLM_MAX_TOKENS_RESULT_SUMMARY:520}
+  semantic-cache:
+    enabled: ${SEMANTIC_CACHE_ENABLED:false}
+    allowed-purposes: ${SEMANTIC_CACHE_ALLOWED_PURPOSES:GENERAL_GUIDANCE,FAQ}
+    backend: ${SEMANTIC_CACHE_BACKEND:redis}
+    namespace: ${SEMANTIC_CACHE_NAMESPACE:youth-depression-llm:semantic-cache:v1}
+    ttl-seconds: ${SEMANTIC_CACHE_TTL_SECONDS:86400}
+    similarity-threshold: ${SEMANTIC_CACHE_SIMILARITY_THRESHOLD:0.92}
+    embedding-model: ${SEMANTIC_CACHE_EMBEDDING_MODEL:intfloat/multilingual-e5-small}
+    max-input-chars: ${SEMANTIC_CACHE_MAX_INPUT_CHARS:800}
+    max-scan-entries: ${SEMANTIC_CACHE_MAX_SCAN_ENTRIES:200}
+    log-hits: ${SEMANTIC_CACHE_LOG_HITS:true}
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    model: ${OPENAI_MODEL:gpt-5-mini}

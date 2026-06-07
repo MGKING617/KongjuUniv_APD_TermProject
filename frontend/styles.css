@@ -1,0 +1,382 @@
+:root {
+  color-scheme: light;
+  --ink: #172126;
+  --muted: #63717a;
+  --line: #d8e0e3;
+  --paper: #f6f8f5;
+  --panel: #ffffff;
+  --teal: #147d72;
+  --coral: #cc5a4b;
+  --gold: #b98918;
+  --blue: #3266a8;
+  --shadow: 0 18px 50px rgba(21, 34, 40, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(20, 125, 114, 0.07) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(50, 102, 168, 0.06) 1px, transparent 1px),
+    var(--paper);
+  background-size: 38px 38px;
+  color: var(--ink);
+  font-family: "Segoe UI", "Malgun Gothic", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(1440px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 22px 0 28px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 1.16;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 19px;
+}
+
+.status-pill {
+  min-width: 150px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  text-align: center;
+  font-weight: 700;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(460px, 1.25fr) minmax(320px, 0.78fr) minmax(340px, 0.9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.survey-panel {
+  padding: 18px;
+}
+
+.result-panel,
+.chat-panel {
+  padding: 18px;
+  min-height: 520px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.icon-button,
+.send-button {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: #f8faf8;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+}
+
+.icon-button:hover,
+.send-button:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  padding: 8px 10px;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(20, 125, 114, 0.12);
+}
+
+.phq-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary-action {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 16px;
+  border: 0;
+  background: var(--teal);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.primary-action:hover {
+  background: #106a61;
+}
+
+.mini-meter {
+  position: relative;
+  width: 92px;
+  height: 46px;
+  overflow: hidden;
+  border-bottom: 3px solid var(--line);
+}
+
+.mini-meter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 12px solid var(--line);
+  border-bottom: 0;
+  border-radius: 92px 92px 0 0;
+}
+
+#meterNeedle {
+  position: absolute;
+  left: 44px;
+  bottom: -2px;
+  width: 3px;
+  height: 42px;
+  background: var(--coral);
+  transform-origin: bottom center;
+  transform: rotate(-72deg);
+  transition: transform 260ms ease;
+}
+
+.risk-number {
+  font-size: 64px;
+  font-weight: 850;
+  line-height: 1;
+  margin-top: 16px;
+}
+
+.risk-level {
+  color: var(--muted);
+  font-weight: 800;
+  margin: 8px 0 18px;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.metric-row div {
+  border: 1px solid var(--line);
+  padding: 10px;
+  background: #f8faf8;
+}
+
+.metric-row span {
+  display: block;
+  font-size: 18px;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.metric-row small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.phq-result {
+  margin-bottom: 12px;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.contrib-list {
+  display: grid;
+  gap: 8px;
+}
+
+.contrib-item {
+  border-left: 4px solid var(--teal);
+  background: #f8faf8;
+  padding: 10px 12px;
+}
+
+.contrib-item.risk-up {
+  border-left-color: var(--coral);
+}
+
+.contrib-item strong {
+  display: block;
+  font-size: 14px;
+}
+
+.contrib-item span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.disclaimer {
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chat-panel {
+  display: grid;
+  grid-template-rows: auto minmax(320px, 1fr) auto;
+}
+
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.bubble {
+  max-width: 88%;
+  padding: 10px 12px;
+  line-height: 1.5;
+  border: 1px solid var(--line);
+  background: #f8faf8;
+}
+
+.bubble.user {
+  align-self: flex-end;
+  background: #ecf4f2;
+  border-color: rgba(20, 125, 114, 0.25);
+}
+
+.bubble.assistant {
+  align-self: flex-start;
+}
+
+.chat-form {
+  display: grid;
+  grid-template-columns: 1fr 46px;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.send-button {
+  min-height: 70px;
+  font-size: 24px;
+}
+
+@media (max-width: 1180px) {
+  .workspace {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .survey-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 20px, 720px);
+  }
+
+  .topbar,
+  .workspace {
+    display: block;
+  }
+
+  .status-pill,
+  .result-panel,
+  .chat-panel {
+    margin-top: 12px;
+  }
+
+  .form-grid,
+  .phq-strip,
+  .metric-row {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .risk-number {
+    font-size: 48px;
+  }
+}
+

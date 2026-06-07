@@ -1,0 +1,73 @@
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: youth_mental_health
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: Asia/Seoul
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  ml:
+    build:
+      context: .
+      dockerfile: ml/Dockerfile
+    restart: unless-stopped
+    environment:
+      SEMANTIC_CACHE_EMBEDDING_MODEL: ${SEMANTIC_CACHE_EMBEDDING_MODEL}
+      SEMANTIC_CACHE_PRELOAD_EMBEDDING: ${SEMANTIC_CACHE_PRELOAD_EMBEDDING:-false}
+    ports:
+      - "8000:8000"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+      - ml
+    environment:
+      DB_URL: jdbc:mysql://db:3306/youth_mental_health?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      ML_API_URL: http://ml:8000
+      LLM_BASE_URL: ${LLM_BASE_URL}
+      LLM_API_KEY: ${LLM_API_KEY}
+      LLM_MODEL: ${LLM_MODEL}
+      LLM_PROMPT_VERSION: ${LLM_PROMPT_VERSION:-v1}
+      SEMANTIC_CACHE_ENABLED: ${SEMANTIC_CACHE_ENABLED:-false}
+      SEMANTIC_CACHE_REDIS_URL: redis://redis:6379/0
+      SEMANTIC_CACHE_ALLOWED_PURPOSES: ${SEMANTIC_CACHE_ALLOWED_PURPOSES:-GENERAL_GUIDANCE,FAQ}
+      SEMANTIC_CACHE_NAMESPACE: ${SEMANTIC_CACHE_NAMESPACE:-youth-depression-llm:semantic-cache:v1}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:
