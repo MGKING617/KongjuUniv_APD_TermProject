@@ -48,7 +48,7 @@ function App() {
     return (
       <main className="auth-shell">
         <section className="auth-panel">
-          <p className="eyebrow">머신러닝 기반의 청년기 우울증 조기 탐지 모형 개발 고급프로그래밍설계 텀 프로젝트</p>
+          <p className="eyebrow">고급프로그래밍설계 텀 프로젝트</p>
           <h1>우울증 조기 탐지</h1>
           <p className="notice">
             챗봇 문답과 설문 응답을 바탕으로 우울증 조기 탐지
